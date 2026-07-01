@@ -28,9 +28,16 @@ class AuthController
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['role'] = $user['role'];
 
-                echo "<h2>Login Berhasil</h2>";
-                echo "Selamat datang <b>" . $_SESSION['nama'] . "</b><br>";
-                echo "Role : " . $_SESSION['role'];
+                if ($user['role'] == "admin") {
+
+                    header("Location: app/views/dashboard/admin.php");
+                    exit;
+
+                } else {
+
+                    echo "Dashboard customer akan dibuat nanti.";
+
+                }
 
             } else {
 

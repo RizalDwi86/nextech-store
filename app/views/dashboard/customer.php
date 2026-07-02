@@ -3,10 +3,13 @@
 session_start();
 
 if (!isset($_SESSION['id'])) {
-
     header("Location: ../../../index.php");
     exit;
+}
 
+if ($_SESSION['role'] != "customer") {
+    header("Location: admin.php");
+    exit;
 }
 
 ?>
@@ -23,7 +26,15 @@ if (!isset($_SESSION['id'])) {
 
 </head>
 
-<body class="container mt-5">
+<body class="bg-light">
+
+<?php require_once "../layout/navbar.php"; ?>
+
+<div class="container mt-5">
+
+<div class="card shadow">
+
+<div class="card-body">
 
 <h2>Dashboard Customer</h2>
 
@@ -35,11 +46,11 @@ if (!isset($_SESSION['id'])) {
 
 <p>Role : <?php echo $_SESSION['role']; ?></p>
 
-<a href="../../../logout.php" class="btn btn-danger">
+</div>
 
-Logout
+</div>
 
-</a>
+</div>
 
 </body>
 

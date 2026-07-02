@@ -2,6 +2,10 @@
 
 session_start();
 
+header("Cache-Control: no-store, no-cache, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
+
 if (!isset($_SESSION['id'])) {
     header("Location: ../../../index.php");
     exit;
@@ -98,6 +102,10 @@ $user = $query->fetch(PDO::FETCH_ASSOC);
 
 Edit Profil
 
+</a>
+
+<a href="change_password.php" class="btn btn-warning">
+    Ganti Password
 </a>
 
 </div>

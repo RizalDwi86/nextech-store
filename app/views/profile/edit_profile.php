@@ -2,6 +2,10 @@
 
 session_start();
 
+header("Cache-Control: no-store, no-cache, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
+
 if (!isset($_SESSION['id'])) {
     header("Location: ../../../index.php");
     exit;
@@ -18,6 +22,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = trim($_POST['email']);
     $alamat = trim($_POST['alamat']);
 
+    // Cek apakah email sudah digunakan user lain
+    $cek = $conn->prepare("SELECT id FROM users WHERE email = ? AND id != ?");
+    $cek->execute([$email, $_SESSION['id']]);
+
+    if ($cek->rowCount() > 0) {
+
+        echo "<script>
+                alert('Email sudah digunakan oleh pengguna lain!');
+                window.location='edit_profile.php';
+              </script>";
+        exit;
+    }
+
+    // Update data
     $query = $conn->prepare("UPDATE users SET nama=?, email=?, alamat=? WHERE id=?");
     $query->execute([
         $nama,
@@ -26,6 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['id']
     ]);
 
+    // Update session
     $_SESSION['nama'] = $nama;
     $_SESSION['email'] = $email;
 
@@ -50,7 +69,6 @@ $user = $query->fetch(PDO::FETCH_ASSOC);
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Edit Profil</title>
@@ -65,73 +83,71 @@ $user = $query->fetch(PDO::FETCH_ASSOC);
 
 <div class="container mt-5">
 
-<div class="card shadow">
+    <div class="card shadow">
 
-<div class="card-header">
+        <div class="card-header">
+            <h3>Edit Profil</h3>
+        </div>
 
-<h3>Edit Profil</h3>
+        <div class="card-body">
 
-</div>
+            <form method="POST">
 
-<div class="card-body">
+                <div class="mb-3">
 
-<form method="POST">
+                    <label class="form-label">Nama</label>
 
-<div class="mb-3">
+                    <input
+                        type="text"
+                        class="form-control"
+                        name="nama"
+                        value="<?php echo htmlspecialchars($user['nama']); ?>"
+                        required>
 
-<label class="form-label">Nama</label>
+                </div>
 
-<input
-type="text"
-class="form-control"
-name="nama"
-value="<?php echo htmlspecialchars($user['nama']); ?>"
-required>
+                <div class="mb-3">
 
-</div>
+                    <label class="form-label">Email</label>
 
-<div class="mb-3">
+                    <input
+                        type="email"
+                        class="form-control"
+                        name="email"
+                        value="<?php echo htmlspecialchars($user['email']); ?>"
+                        required>
 
-<label class="form-label">Email</label>
+                </div>
 
-<input
-type="email"
-class="form-control"
-name="email"
-value="<?php echo htmlspecialchars($user['email']); ?>"
-required>
+                <div class="mb-3">
 
-</div>
+                    <label class="form-label">Alamat</label>
 
-<div class="mb-3">
+                    <textarea
+                        class="form-control"
+                        name="alamat"
+                        rows="3"
+                        required><?php echo htmlspecialchars($user['alamat']); ?></textarea>
 
-<label class="form-label">Alamat</label>
+                </div>
 
-<textarea
-class="form-control"
-name="alamat"
-rows="3"
-required><?php echo htmlspecialchars($user['alamat']); ?></textarea>
+                <button type="submit" class="btn btn-success">
 
-</div>
+                    Simpan Perubahan
 
-<button type="submit" class="btn btn-success">
+                </button>
 
-Simpan Perubahan
+                <a href="profile.php" class="btn btn-secondary">
 
-</button>
+                    Kembali
 
-<a href="profile.php" class="btn btn-secondary">
+                </a>
 
-Kembali
+            </form>
 
-</a>
+        </div>
 
-</form>
-
-</div>
-
-</div>
+    </div>
 
 </div>
 

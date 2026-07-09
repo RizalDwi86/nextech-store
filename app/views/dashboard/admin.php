@@ -21,7 +21,7 @@ require_once '../../core/Database.php';
 $database = new Database();
 $conn = $database->getConnection();
 
-// Statistik Total Produk (try-catch kalau tabel belum ada)
+
 try {
     $stmtProd = $conn->query("SELECT COUNT(*) FROM products");
     $totalProduk = $stmtProd ? $stmtProd->fetchColumn() : 0;
@@ -29,7 +29,7 @@ try {
     $totalProduk = 0;
 }
 
-// Statistik Total User (customer saja)
+// Statistik Total User (customer)
 try {
     $stmtUser = $conn->query("SELECT COUNT(*) FROM users WHERE role = 'customer'");
     $totalUser = $stmtUser ? $stmtUser->fetchColumn() : 0;

@@ -1,0 +1,14 @@
+# Ignore uploaded product images (user-generated content, not part of source code)
+public/uploads/*
+!public/uploads/.gitkeep
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE/editor files
+.vscode/
+.idea/
+
+# PHP error logs
+*.log

@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Otorisasi: Hanya Admin yang boleh mengakses halaman ini
 if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'admin') {
     header('Location: ../dashboard/customer.php');
     exit;
@@ -180,10 +179,8 @@ $oldInput = $result['oldInput'];
         </div>
     </div>
 
-    <!-- Bootstrap Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- JavaScript to Handle Live Image Preview -->
     <script>
         const gambarInput = document.getElementById('gambar');
         const imgPreview = document.getElementById('imgPreview');

@@ -12,9 +12,6 @@ class ProductController extends Controller
         $this->productModel = new ProductModel();
     }
 
-    /**
-     * Menampilkan daftar produk dengan fitur pencarian dan pagination.
-     */
     public function index()
     {
         $search = isset($_GET['search']) ? trim($_GET['search']) : '';
@@ -65,7 +62,7 @@ class ProductController extends Controller
                 $errors['stok'] = 'Stok harus berupa angka dan tidak boleh negatif.';
             }
 
-            // 2. Validasi & Upload Gambar
+
             $gambarName = null;
             if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] !== UPLOAD_ERR_NO_FILE) {
                 $file = $_FILES['gambar'];
@@ -77,11 +74,9 @@ class ProductController extends Controller
                 } elseif ($file['size'] > $maxSize) {
                     $errors['gambar'] = 'Ukuran file maksimal adalah 2MB.';
                 } else {
-                    // Generate nama file unik
                     $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
                     $gambarName = uniqid('prod_', true) . '.' . $ext;
                     
-                    // Pastikan folder upload ada
                     $uploadDir = __DIR__ . '/../../public/uploads/';
                     if (!is_dir($uploadDir)) {
                         mkdir($uploadDir, 0755, true);
@@ -93,7 +88,6 @@ class ProductController extends Controller
                 }
             }
 
-            // 3. Simpan ke database jika tidak ada error
             if (empty($errors)) {
                 $data = [
                     'nama'     => $nama,
@@ -120,9 +114,7 @@ class ProductController extends Controller
         ];
     }
 
-    /**
-     * Menangani proses pengeditan produk.
-     */
+
     public function edit($id)
     {
         $product = $this->productModel->getProductById($id);
@@ -157,8 +149,8 @@ class ProductController extends Controller
                 $errors['stok'] = 'Stok harus berupa angka dan tidak boleh negatif.';
             }
 
-            // 2. Validasi & Upload Gambar Baru (jika ada)
-            $gambarName = $product['gambar']; // Bawaan gambar lama
+
+            $gambarName = $product['gambar']; 
             if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] !== UPLOAD_ERR_NO_FILE) {
                 $file = $_FILES['gambar'];
                 $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
@@ -179,7 +171,6 @@ class ProductController extends Controller
                     }
 
                     if (move_uploaded_file($file['tmp_name'], $uploadDir . $newGambarName)) {
-                        // Hapus gambar lama jika ada
                         if ($gambarName && file_exists($uploadDir . $gambarName)) {
                             unlink($uploadDir . $gambarName);
                         }
@@ -190,7 +181,6 @@ class ProductController extends Controller
                 }
             }
 
-            // 3. Simpan Perubahan jika tidak ada error
             if (empty($errors)) {
                 $data = [
                     'nama'     => $nama,
@@ -218,9 +208,7 @@ class ProductController extends Controller
         ];
     }
 
-    /**
-     * Menghapus produk beserta gambar fisiknya.
-     */
+
     public function delete($id)
     {
         $product = $this->productModel->getProductById($id);

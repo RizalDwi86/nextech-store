@@ -12,12 +12,8 @@ class CustomerController extends Controller
         $this->productModel = new ProductModel();
     }
 
-    /**
-     * Menampilkan halaman beranda customer
-     */
     public function home()
     {
-        // Ambil 4 produk terbaru untuk beranda
         $recentProducts = $this->productModel->getAllProducts('', 4, 0);
 
         return [
@@ -25,9 +21,7 @@ class CustomerController extends Controller
         ];
     }
 
-    /**
-     * Menampilkan halaman katalog semua produk
-     */
+
     public function catalog()
     {
         $search = isset($_GET['search']) ? trim($_GET['search']) : '';
@@ -39,9 +33,6 @@ class CustomerController extends Controller
         ];
     }
 
-    /**
-     * Menampilkan halaman detail produk
-     */
     public function detail($id)
     {
         $product = $this->productModel->getProductById($id);

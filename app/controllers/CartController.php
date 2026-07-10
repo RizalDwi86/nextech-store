@@ -20,17 +20,13 @@ class CartController extends Controller
         }
     }
 
-    /**
-     * Menampilkan isi keranjang belanja
-     */
+ 
     public function index()
     {
         return $_SESSION['cart'];
     }
 
-    /**
-     * Menambah produk ke keranjang
-     */
+ 
     public function add($productId, $qty)
     {
         $product = $this->productModel->getProductById($productId);
@@ -59,9 +55,7 @@ class CartController extends Controller
         }
     }
 
-    /**
-     * Update kuantitas produk di keranjang
-     */
+
     public function update($productId, $qty)
     {
         if (isset($_SESSION['cart'][$productId])) {
@@ -78,9 +72,7 @@ class CartController extends Controller
         }
     }
 
-    /**
-     * Menghapus produk dari keranjang
-     */
+
     public function remove($productId)
     {
         if (isset($_SESSION['cart'][$productId])) {
@@ -89,17 +81,13 @@ class CartController extends Controller
         }
     }
 
-    /**
-     * Mengosongkan keranjang
-     */
+
     public function clear()
     {
         $_SESSION['cart'] = [];
     }
 
-    /**
-     * Menghitung total harga di keranjang
-     */
+
     public function getTotal()
     {
         $total = 0;

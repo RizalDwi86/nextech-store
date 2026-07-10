@@ -14,9 +14,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 require_once '../../controllers/OrderController.php';
 $orderController = new OrderController();
 
-// We need to fetch the order summary from DB to check if it belongs to the user
-// Since getOrdersByUser gives all, we can just find it, or we add getOrderById
-// To keep it simple, we'll fetch from history and filter it.
+
 $orders = $orderController->history()['orders'];
 $currentOrder = null;
 foreach ($orders as $o) {

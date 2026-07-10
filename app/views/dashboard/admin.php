@@ -6,37 +6,20 @@ header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Pragma: no-cache");
 header("Expires: 0");
 
-if (!isset($_SESSION['id'])) {
+if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../../../index.php");
     exit;
 }
 
-if ($_SESSION['role'] != "admin") {
-    header("Location: customer.php");
-    exit;
-}
+require_once '../../controllers/AdminController.php';
+$adminController = new AdminController();
+$data = $adminController->dashboard();
 
-require_once '../../core/Database.php';
-
-$database = new Database();
-$conn = $database->getConnection();
-
-
-try {
-    $stmtProd = $conn->query("SELECT COUNT(*) FROM products");
-    $totalProduk = $stmtProd ? $stmtProd->fetchColumn() : 0;
-} catch (Exception $e) {
-    $totalProduk = 0;
-}
-
-// Statistik Total User (customer)
-try {
-    $stmtUser = $conn->query("SELECT COUNT(*) FROM users WHERE role = 'customer'");
-    $totalUser = $stmtUser ? $stmtUser->fetchColumn() : 0;
-} catch (Exception $e) {
-    $totalUser = 0;
-}
-
+$totalProduk = $data['totalProducts'];
+$totalUser = $data['totalUsers'];
+$totalOrder = $data['totalOrders'];
+$totalRevenue = $data['totalRevenue'];
+$chartData = $data['chartData'];
 ?>
 
 <!DOCTYPE html>
@@ -48,6 +31,7 @@ try {
     <title>Dashboard Admin - NexTech Store</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             background-color: #f8f9fa;
@@ -243,6 +227,12 @@ try {
             <a href="../product/index.php" class="nav-link">
                 <i class="bi bi-box-seam"></i> Kelola Produk
             </a>
+            <a href="../admin/order_list.php" class="nav-link">
+                <i class="bi bi-cart-check"></i> Kelola Pesanan
+            </a>
+            <a href="../admin/user_list.php" class="nav-link">
+                <i class="bi bi-people"></i> Kelola Pengguna
+            </a>
         </nav>
 
         <div class="sidebar-section-title">Akun</div>
@@ -304,8 +294,8 @@ try {
                         <div class="icon-wrap bg-warning bg-opacity-10 text-warning">
                             <i class="bi bi-cart-fill"></i>
                         </div>
-                        <div class="stat-number text-dark">0</div>
-                        <div class="stat-label">Total Order</div>
+                        <div class="stat-number text-dark"><?php echo number_format($totalOrder); ?></div>
+                        <div class="stat-label">Total Pesanan</div>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3">
@@ -313,8 +303,20 @@ try {
                         <div class="icon-wrap bg-danger bg-opacity-10 text-danger">
                             <i class="bi bi-currency-dollar"></i>
                         </div>
-                        <div class="stat-number text-dark">Rp 0</div>
+                        <div class="stat-number text-dark">Rp <?php echo number_format($totalRevenue, 0, ',', '.'); ?></div>
                         <div class="stat-label">Total Pendapatan</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chart -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card border-0 shadow-sm rounded-4">
+                        <div class="card-body p-4">
+                            <h6 class="fw-bold mb-3"><i class="bi bi-graph-up text-primary me-2"></i>Grafik Pendapatan Terbaru</h6>
+                            <canvas id="revenueChart" height="80"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -376,6 +378,35 @@ try {
     </div><!-- end main-content -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const chartData = <?php echo $chartData; ?>;
+        if (chartData.labels.length > 0) {
+            const ctx = document.getElementById('revenueChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: chartData.labels,
+                    datasets: [{
+                        label: 'Pendapatan Harian (Selesai)',
+                        data: chartData.data,
+                        borderColor: '#e94560',
+                        backgroundColor: 'rgba(233, 69, 96, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        } else {
+            document.getElementById('revenueChart').parentElement.innerHTML += '<p class="text-muted mt-2">Belum ada data pesanan selesai.</p>';
+        }
+    </script>
 </body>
 
 </html>

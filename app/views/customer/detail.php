@@ -70,7 +70,7 @@ $product = $viewData['product'];
                 <div class="col-md-5">
                     <div class="product-img-wrapper border shadow-sm">
                         <?php if (!empty($product['gambar']) && file_exists(__DIR__ . '/../../../public/uploads/' . $product['gambar'])): ?>
-                            <img src="../../../public/uploads/<?= htmlspecialchars($product['gambar']) ?>" alt="<?= htmlspecialchars($product['nama']) ?>" class="product-img">
+                            <img src="../../../public/uploads/<?= htmlspecialchars($product['gambar']) ?>" alt="<?= htmlspecialchars($product['nama']) ?>" class="product-img zoomable-img">
                         <?php else: ?>
                             <i class="bi bi-image placeholder-img"></i>
                         <?php endif; ?>

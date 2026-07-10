@@ -1,6 +1,6 @@
 # NexTech Store
 
-NexTech Store adalah aplikasi web e-commerce sederhana berbasis PHP murni (Vanilla PHP) menggunakan pola arsitektur **MVC (Model-View-Controller)**. Proyek ini dibangun dengan tujuan pembelajaran pengembangan web terstruktur.
+NexTech Store adalah aplikasi web e-commerce sederhana berbasis PHP murni menggunakan pola arsitektur **MVC (Model-View-Controller)**. 
 
 ## Fitur Utama
 
@@ -63,13 +63,13 @@ Saat Anda mengimpor file `nextech_store.sql`, database secara otomatis akan memi
 - Admin Email: `admin@nextech.com`
 - Password: `admin123`
 
-  Customer Email: dgdgerg@gmail.com
-  Password: ‘haha123’
+- Customer Email: `dgdgerg@gmail.com`
+- Password: `haha123`
 ---
 
 ## Struktur Folder (MVC)
 
-
+```text
 nextech-store/
 ├── app/
 │   ├── controllers/   # Mengatur logika bisnis dan alur data

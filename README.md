@@ -4,23 +4,18 @@ NexTech Store adalah aplikasi web e-commerce sederhana berbasis PHP murni (Vanil
 
 ## Fitur Utama
 
-### 🛒 Customer (Pelanggan)
+## Customer (Pelanggan)
 - **Katalog Produk:** Melihat semua daftar produk elektronik yang tersedia.
 - **Keranjang Belanja:** Menambah, mengubah kuantitas, dan menghapus produk dari keranjang.
 - **Checkout:** Mengisi formulir pengiriman dan menyelesaikan pesanan.
 - **Riwayat Pesanan:** Melacak pesanan (Pending, Diproses, Selesai, Dibatalkan).
 - **Profil:** Melihat detail akun dan mengubah password.
 
-### 🛡️ Administrator
+## Administrator
 - **Dashboard:** Statistik toko (Total Produk, Pengguna, Pendapatan, Grafik Penjualan).
 - **Kelola Produk:** Operasi CRUD (Tambah, Edit, Hapus) produk, termasuk unggah gambar.
 - **Kelola Pesanan:** Mengubah status pesanan pelanggan.
 - **Kelola Pengguna:** Melihat daftar pengguna dan mengubah hak akses (Admin/Customer).
-
-### 🎨 UI & UX
-- Dibangun dengan **Bootstrap 5**.
-- Desain responsif untuk Desktop dan Mobile.
-- Fitur **Dark Mode** terintegrasi.
 
 ---
 
@@ -32,19 +27,19 @@ NexTech Store adalah aplikasi web e-commerce sederhana berbasis PHP murni (Vanil
 
 ### Langkah-langkah:
 
-1. **Clone Repository**
+1. Clone Repository
    Buka terminal, arahkan ke folder `htdocs` (jika menggunakan XAMPP), lalu jalankan:
    ```bash
    git clone https://github.com/RizalDwi86/nextech-store.git
    cd nextech-store
    ```
 
-2. **Setup Database**
-   - Buka **phpMyAdmin** (biasanya di `http://localhost/phpmyadmin`).
+2. Setup Database
+   - Buka phpMyAdmin (biasanya di `http://localhost/phpmyadmin`).
    - Buat database baru bernama `nextech_store`.
    - Import file SQL yang telah disediakan: Klik tab *Import* lalu pilih file `database/nextech_store.sql`.
 
-3. **Konfigurasi Database (Opsional)**
+3. Konfigurasi Database (Opsional)
    Secara default, aplikasi akan mencoba login ke MySQL dengan kredensial:
    - Host: `localhost`
    - User: `root`
@@ -67,11 +62,7 @@ Saat Anda mengimpor file `nextech_store.sql`, database secara otomatis akan memi
 
 ### Akun Administrator
 - **Email:** `admin@nextech.com`
-- **Password:** `123123`
-
-### Akun Customer
-- **Email:** `zal@gmail.com`
-- **Password:** `123123`
+- **Password:** `admin123`
 
 ---
 
@@ -92,11 +83,3 @@ nextech-store/
 ├── index.php          # Entry point (Halaman Login)
 └── register.php       # Halaman Registrasi
 ```
-
----
-
-## Catatan Tambahan
-- Pastikan folder `public/uploads/` memiliki izin akses tulis (write permission) agar fitur unggah gambar berfungsi.
-- Jangan menghapus pengguna utama dari database untuk menghindari rusaknya relasi Foreign Key pesanan.
-
-Dibuat dengan ❤️ untuk pembelajaran Web Development.

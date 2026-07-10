@@ -35,7 +35,7 @@ $orders = $viewData['orders'];
                 <h3 class="fw-bold">Riwayat Pesanan</h3>
                 <p class="text-muted mb-0">Daftar semua transaksi yang pernah Anda lakukan.</p>
             </div>
-            <a href="../customer/catalog.php" class="btn btn-dark"><i class="bi bi-cart-plus me-2"></i>Belanja Lagi</a>
+            <a href="../customer/catalog.php" class="btn btn-primary"><i class="bi bi-cart-plus me-2"></i>Belanja Lagi</a>
         </div>
 
         <?php if (isset($_SESSION['success'])): ?>
@@ -84,7 +84,7 @@ $orders = $viewData['orders'];
                                             <span class="badge <?= $badgeClass ?> text-uppercase"><?= $order['status'] ?></span>
                                         </td>
                                         <td class="pe-4 text-center">
-                                            <a href="detail.php?id=<?= $order['id'] ?>" class="btn btn-outline-dark btn-sm">Detail</a>
+                                            <a href="detail.php?id=<?= $order['id'] ?>" class="btn btn-outline-primary btn-sm">Detail</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

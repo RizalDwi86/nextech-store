@@ -85,7 +85,7 @@ $total = $cartController->getTotal();
                                                 <td class="ps-4 py-3">
                                                     <div class="d-flex align-items-center">
                                                         <?php if (!empty($item['product']['gambar']) && file_exists(__DIR__ . '/../../../public/uploads/' . $item['product']['gambar'])): ?>
-                                                            <img src="../../../public/uploads/<?= htmlspecialchars($item['product']['gambar']) ?>" alt="Img" class="cart-img me-3">
+                                                            <img src="../../../public/uploads/<?= htmlspecialchars($item['product']['gambar']) ?>" alt="Img" class="cart-img me-3 zoomable-img">
                                                         <?php else: ?>
                                                             <div class="cart-img-placeholder me-3"><i class="bi bi-image"></i></div>
                                                         <?php endif; ?>

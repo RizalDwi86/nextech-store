@@ -106,7 +106,7 @@ $orderDetails = $orderController->detail($_GET['id']);
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <?php if (!empty($detail['gambar']) && file_exists(__DIR__ . '/../../../public/uploads/' . $detail['gambar'])): ?>
-                                                <img src="../../../public/uploads/<?= htmlspecialchars($detail['gambar']) ?>" alt="Img" class="product-img me-3">
+                                                <img src="../../../public/uploads/<?= htmlspecialchars($detail['gambar']) ?>" alt="Img" class="product-img me-3 zoomable-img">
                                             <?php else: ?>
                                                 <div class="placeholder-img me-3"><i class="bi bi-image"></i></div>
                                             <?php endif; ?>

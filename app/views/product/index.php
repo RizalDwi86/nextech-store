@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Otorisasi: Hanya Admin yang boleh mengakses halaman ini
 if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'admin') {
     header('Location: ../dashboard/customer.php');
     exit;
@@ -10,12 +9,11 @@ if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'admin') {
 require_once '../../controllers/ProductController.php';
 $controller = new ProductController();
 
-// Handler untuk aksi hapus
+
 if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])) {
     $controller->delete($_GET['id']);
 }
 
-// Mengambil data produk, search, dan pagination
 $viewData = $controller->index();
 $products = $viewData['products'];
 $search = $viewData['search'];

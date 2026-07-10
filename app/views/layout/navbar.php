@@ -3,7 +3,6 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// Deteksi halaman aktif berdasarkan URL, bukan __DIR__
 $currentUrl = $_SERVER['REQUEST_URI'] ?? '';
 
 // Tentukan path relatif berdasarkan URL

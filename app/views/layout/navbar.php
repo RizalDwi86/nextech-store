@@ -5,25 +5,42 @@ if (session_status() == PHP_SESSION_NONE) {
 
 $currentUrl = $_SERVER['REQUEST_URI'] ?? '';
 
+// Tentukan path relatif berdasarkan URL
+$role = $_SESSION['role'] ?? 'customer';
 
 if (strpos($currentUrl, '/views/product') !== false) {
-    $dashLink  = '../dashboard/' . ($_SESSION['role'] ?? 'customer') . '.php';
+    $dashLink    = '../dashboard/' . $role . '.php';
     $profileLink = '../profile/profile.php';
     $logoutLink  = '../../../logout.php';
     $produkLink  = 'index.php';
 } elseif (strpos($currentUrl, '/views/profile') !== false) {
-    $dashLink  = '../dashboard/' . ($_SESSION['role'] ?? 'customer') . '.php';
+    $dashLink    = '../dashboard/' . $role . '.php';
     $profileLink = 'profile.php';
     $logoutLink  = '../../../logout.php';
     $produkLink  = '../product/index.php';
 } elseif (strpos($currentUrl, '/views/dashboard') !== false) {
-    $dashLink  = ($_SESSION['role'] ?? 'customer') === 'admin' ? 'admin.php' : 'customer.php';
+    $dashLink    = $role === 'admin' ? 'admin.php' : 'customer.php';
+    $profileLink = '../profile/profile.php';
+    $logoutLink  = '../../../logout.php';
+    $produkLink  = '../product/index.php';
+} elseif (strpos($currentUrl, '/views/customer') !== false) {
+    $dashLink    = '../dashboard/' . $role . '.php';
+    $profileLink = '../profile/profile.php';
+    $logoutLink  = '../../../logout.php';
+    $produkLink  = '../product/index.php';
+} elseif (strpos($currentUrl, '/views/cart') !== false) {
+    $dashLink    = '../dashboard/' . $role . '.php';
+    $profileLink = '../profile/profile.php';
+    $logoutLink  = '../../../logout.php';
+    $produkLink  = '../product/index.php';
+} elseif (strpos($currentUrl, '/views/order') !== false) {
+    $dashLink    = '../dashboard/' . $role . '.php';
     $profileLink = '../profile/profile.php';
     $logoutLink  = '../../../logout.php';
     $produkLink  = '../product/index.php';
 } else {
-    // Fallback
-    $dashLink  = 'app/views/dashboard/' . ($_SESSION['role'] ?? 'customer') . '.php';
+    // Fallback (dari root)
+    $dashLink    = 'app/views/dashboard/' . $role . '.php';
     $profileLink = 'app/views/profile/profile.php';
     $logoutLink  = 'logout.php';
     $produkLink  = 'app/views/product/index.php';
@@ -44,6 +61,25 @@ if (strpos($currentUrl, '/views/product') !== false) {
         <div class="collapse navbar-collapse" id="navMenu">
 
             <ul class="navbar-nav me-auto">
+                <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'customer'): ?>
+                    <li class="nav-item">
+                        <a class="nav-link <?= strpos($currentUrl, '/customer/home.php') !== false ? 'active' : '' ?>" href="/nextech-store/app/views/customer/home.php"><i class="bi bi-house-door me-1"></i>Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?= strpos($currentUrl, '/customer/catalog.php') !== false ? 'active' : '' ?>" href="/nextech-store/app/views/customer/catalog.php"><i class="bi bi-bag me-1"></i>Katalog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?= strpos($currentUrl, '/cart/index.php') !== false ? 'active' : '' ?>" href="/nextech-store/app/views/cart/index.php">
+                            <i class="bi bi-cart3 me-1"></i>Keranjang 
+                            <?php if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0): ?>
+                                <span class="badge bg-danger rounded-pill"><?= count($_SESSION['cart']) ?></span>
+                            <?php endif; ?>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?= strpos($currentUrl, '/order/history.php') !== false ? 'active' : '' ?>" href="/nextech-store/app/views/order/history.php"><i class="bi bi-clock-history me-1"></i>Riwayat Pesanan</a>
+                    </li>
+                <?php endif; ?>
                 <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
                     <li class="nav-item">
                         <a class="nav-link <?php echo strpos($currentUrl, '/views/product') !== false ? 'active' : ''; ?>"

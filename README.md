@@ -60,15 +60,16 @@ NexTech Store adalah aplikasi web e-commerce sederhana berbasis PHP murni (Vanil
 
 Saat Anda mengimpor file `nextech_store.sql`, database secara otomatis akan memiliki dua akun uji coba yang bisa langsung digunakan:
 
-### Akun Administrator
-- **Email:** `admin@nextech.com`
-- **Password:** `admin123`
+- Admin Email: `admin@nextech.com`
+- Password: `admin123`
 
+  Customer Email: dgdgerg@gmail.com
+  Password: ‘haha123’
 ---
 
 ## Struktur Folder (MVC)
 
-```text
+
 nextech-store/
 ├── app/
 │   ├── controllers/   # Mengatur logika bisnis dan alur data

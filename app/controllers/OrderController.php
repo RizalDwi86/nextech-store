@@ -19,9 +19,6 @@ class OrderController extends Controller
         }
     }
 
-    /**
-     * Menampilkan halaman checkout dan memproses form checkout
-     */
     public function checkout()
     {
         $cartItems = $this->cartController->index();
@@ -35,7 +32,7 @@ class OrderController extends Controller
         $total = $this->cartController->getTotal();
         $errors = [];
 
-        // Proses form checkout jika method POST
+      
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $namaPenerima = trim($_POST['nama_penerima']);
             $alamat = trim($_POST['alamat']);
@@ -49,11 +46,9 @@ class OrderController extends Controller
             if (empty($errors)) {
                 $userId = $_SESSION['id'];
                 
-                // Simpan ke database
                 $success = $this->orderModel->createOrder($userId, $namaPenerima, $alamat, $noHp, $total, $cartItems);
 
                 if ($success) {
-                    // Kosongkan keranjang
                     $this->cartController->clear();
                     
                     $_SESSION['success'] = 'Pesanan berhasil dibuat! Terima kasih telah berbelanja.';
@@ -72,9 +67,6 @@ class OrderController extends Controller
         ];
     }
 
-    /**
-     * Menampilkan riwayat pesanan
-     */
     public function history()
     {
         $userId = $_SESSION['id'];
@@ -85,9 +77,6 @@ class OrderController extends Controller
         ];
     }
 
-    /**
-     * Mengambil detail pesanan spesifik (bisa dipanggil via AJAX atau halaman detail)
-     */
     public function detail($orderId)
     {
         return $this->orderModel->getOrderDetails($orderId);

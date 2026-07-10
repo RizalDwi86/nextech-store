@@ -81,7 +81,7 @@ Register
 
 Sudah punya akun?
 
-<a href="../../../index.php">
+<a href="index.php">
 
 Login
 

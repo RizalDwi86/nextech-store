@@ -5,7 +5,6 @@ if (session_status() == PHP_SESSION_NONE) {
 
 $currentUrl = $_SERVER['REQUEST_URI'] ?? '';
 
-// Tentukan path relatif berdasarkan URL
 $role = $_SESSION['role'] ?? 'customer';
 
 if (strpos($currentUrl, '/views/product') !== false) {

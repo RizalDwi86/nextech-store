@@ -89,4 +89,49 @@ class OrderModel extends Model
         $stmt->execute([$orderId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    /**
+     * Mengambil semua pesanan untuk admin
+     */
+    public function getAllOrdersAdmin()
+    {
+        $db = $this->getConnection();
+        $stmt = $db->query(
+            "SELECT o.*, u.nama as nama_user 
+             FROM orders o 
+             JOIN users u ON o.user_id = u.id 
+             ORDER BY o.id DESC"
+        );
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Memperbarui status pesanan
+     */
+    public function updateOrderStatus($orderId, $status)
+    {
+        $db = $this->getConnection();
+        $stmt = $db->prepare("UPDATE orders SET status = ? WHERE id = ?");
+        return $stmt->execute([$status, $orderId]);
+    }
+
+    /**
+     * Menghitung total order
+     */
+    public function countOrders()
+    {
+        $db = $this->getConnection();
+        $stmt = $db->query("SELECT COUNT(*) FROM orders");
+        return $stmt->fetchColumn();
+    }
+
+    /**
+     * Menghitung total pendapatan dari pesanan yang 'selesai'
+     */
+    public function getTotalRevenue()
+    {
+        $db = $this->getConnection();
+        $stmt = $db->query("SELECT SUM(total) FROM orders WHERE status = 'selesai'");
+        return $stmt->fetchColumn() ?: 0;
+    }
 }

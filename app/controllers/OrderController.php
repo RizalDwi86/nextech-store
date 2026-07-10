@@ -92,4 +92,25 @@ class OrderController extends Controller
     {
         return $this->orderModel->getOrderDetails($orderId);
     }
+
+    // --- ADMIN METHODS ---
+
+    public function adminUpdateStatus()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $orderId = $_POST['order_id'] ?? null;
+            $status = $_POST['status'] ?? null;
+
+            if ($orderId && $status) {
+                $this->orderModel->updateOrderStatus($orderId, $status);
+            }
+        }
+        header('Location: ../views/admin/order_list.php');
+        exit;
+    }
+}
+
+if (isset($_GET['action'])) {
+    $controller = new OrderController();
+    if ($_GET['action'] == 'adminUpdateStatus') $controller->adminUpdateStatus();
 }
